@@ -1,6 +1,7 @@
 logs
 *.log
 npm-debug.log*
+public
 .DS_Store
 
 main.py
