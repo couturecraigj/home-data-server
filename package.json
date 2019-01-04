@@ -19,10 +19,8 @@
         "johnny-five": "^1.0.0",
         "loadable-components": "^1.4.0",
         "memoizee": "^0.4.14",
-        "node-dht-sensor": "^0.0.34",
         "node-fetch": "^2.3.0",
         "openweather-apis": "^3.3.5",
-        "raspi-io": "^9.0.1",
         "react": "^16.7.0",
         "react-apollo": "^2.3.3",
         "react-dom": "^16.7.0",
@@ -54,7 +52,7 @@
     },
     "scripts": {
         "start": "node src/server/graphQL/stand-alone.js",
-        "start:ui": "node src/server",
+        "start:ui": "npm run webpack && node src/server",
         "test": "echo \"Error: no test specified\" && exit 1",
         "webpack": "webpack"
     },

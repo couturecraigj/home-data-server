@@ -4,6 +4,7 @@ npm-debug.log*
 public
 .DS_Store
 
+public
 main.py
 coverage
 node_modules
