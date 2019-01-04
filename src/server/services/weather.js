@@ -3,7 +3,7 @@ const memoizee = require("memoizee");
 
 weather.setLang("en");
 weather.setUnits("metric");
-weather.setAPPID("c05a131710c5b1b8162c0a368abd8177");
+weather.setAPPID(process.env.WEATHER_API_KEY);
 
 const getAllWeather = memoizee(
   ({ lat, lon }) => {
