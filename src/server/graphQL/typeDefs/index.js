@@ -1,4 +1,4 @@
-const { gql } = require("apollo-server");
+const { gql } = require('apollo-server');
 
 const typeDefs = gql`
   enum ThermostatState {
@@ -148,7 +148,7 @@ const typeDefs = gql`
     avgTemperature: Float
     avgHumidity: Float
   }
-  
+
   input DayLocationInput {
     id: ID
     timeStamp: Float!
@@ -193,10 +193,10 @@ const typeDefs = gql`
   type Query {
     hello: String!
     getRoom(id: ID!): Room!
-    getWeather(id: ID!): Weather!
+    getWeather(id: ID): Weather!
+    getWeatherForecast(locationId: ID, days: Int!): [WeatherForecast]!
     getLocation(id: ID!): Location!
     getDay(dayOfMonth: Int!, month: Int!, year: Int!): Day!
-    getWeatherForecast(locationId: ID!, days: Int!): [WeatherForecast]!
     getFuelPrice(locationId: ID!): Float
   }
 
@@ -211,4 +211,4 @@ const typeDefs = gql`
   }
 `;
 
-module.exports = typeDefs;
+export default typeDefs;

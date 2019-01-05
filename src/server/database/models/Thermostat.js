@@ -1,5 +1,5 @@
-const thermostat = (sequelize, Sequelize = require("sequelize")) => {
-  const Thermostat = sequelize.define("Thermostat", {
+const thermostat = (sequelize, Sequelize = require('sequelize')) => {
+  const Thermostat = sequelize.define('Thermostat', {
     heatingMin: {
       type: Sequelize.FLOAT
     },
@@ -19,7 +19,7 @@ const thermostat = (sequelize, Sequelize = require("sequelize")) => {
       type: Sequelize.BOOLEAN
     },
     state: {
-      type: Sequelize.ENUM("HEAT", "OFF", "COOL")
+      type: Sequelize.ENUM('HEAT', 'OFF', 'COOL')
     }
   });
 
@@ -33,4 +33,4 @@ const thermostat = (sequelize, Sequelize = require("sequelize")) => {
   return Thermostat;
 };
 
-module.exports = thermostat;
+export default thermostat;

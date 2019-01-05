@@ -1,5 +1,7 @@
-const location = (sequelize, Sequelize = require("sequelize")) => {
-  const Location = sequelize.define("Location", {
+import memoize from 'memoizee';
+
+const location = (sequelize, Sequelize = require('sequelize')) => {
+  const Location = sequelize.define('Location', {
     name: {
       type: Sequelize.STRING,
       allowNull: false
@@ -33,7 +35,46 @@ const location = (sequelize, Sequelize = require("sequelize")) => {
     }).spread(location => location);
   };
 
+  Location.find = memoize(
+    async ({ where: { id } }) => {
+      const location = await Location.findById(+id);
+
+      if (!location) throw new Error('No Location in System yet');
+
+      return location;
+    },
+    {
+      normalizer: ([query]) => JSON.stringify(query),
+      promise: true
+    }
+  );
+
+  Location.addLocation = async ({ lat, lon, name }, context) => {
+    if (!name) {
+      const weatherDetails = await context.services.weather.getAllWeather({
+        lat,
+        lon
+      });
+
+      name = weatherDetails.name;
+    }
+
+    const location = await Location.findOrCreate({
+      where: {
+        lat,
+        lon
+      },
+      defaults: {
+        name
+      }
+    }).spread(location => location);
+
+    context.res.cookie('locationId', location.id, { httpOnly: true });
+
+    return location;
+  };
+
   return Location;
 };
 
-module.exports = location;
+export default location;

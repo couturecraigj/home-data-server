@@ -1,17 +1,7 @@
-import React from 'react';
-import ReactDOM from 'react-dom'
-import Helmet from 'react-helmet'
+import render from './render';
 
-const App = () => (
-  <div>
-    <Helmet>
-      <title>First Page</title>
-    </Helmet>
-    <div>
-      THIS IS IN APP!!!
-    </div>
-  </div>
-);
+render();
 
-
-ReactDOM.render(<App />, document.querySelector('#app-root'))
+if (module.hot) {
+  module.hot.accept();
+}

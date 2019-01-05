@@ -1,5 +1,5 @@
-const room = (sequelize, Sequelize = require("sequelize")) => {
-  const Room = sequelize.define("Room", {
+const room = (sequelize, Sequelize = require('sequelize')) => {
+  const Room = sequelize.define('Room', {
     name: {
       type: Sequelize.STRING,
       allowNull: false,
@@ -46,8 +46,10 @@ const room = (sequelize, Sequelize = require("sequelize")) => {
         room.currentHumidity = humidity;
         await room.save();
       }
+
       return room;
     });
+
     await context.db.models.RoomHistory.create({
       DayId: day.id,
       timeStamp,
@@ -55,6 +57,7 @@ const room = (sequelize, Sequelize = require("sequelize")) => {
       temp: temperature,
       humidity
     });
+
     return room;
   };
 
@@ -68,4 +71,4 @@ const room = (sequelize, Sequelize = require("sequelize")) => {
   return Room;
 };
 
-module.exports = room;
+export default room;

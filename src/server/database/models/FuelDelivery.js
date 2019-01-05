@@ -1,7 +1,7 @@
-const fuelDelivery = (sequelize, Sequelize = require("sequelize")) => {
-  const FuelDelivery = sequelize.define("FuelDelivery", {
+const fuelDelivery = (sequelize, Sequelize = require('sequelize')) => {
+  const FuelDelivery = sequelize.define('FuelDelivery', {
     type: {
-      type: Sequelize.ENUM("DIESEL", "WOOD", "PELLET", "PROPANE", "ELECTRIC")
+      type: Sequelize.ENUM('DIESEL', 'WOOD', 'PELLET', 'PROPANE', 'ELECTRIC')
     },
     costPerUnit: {
       type: Sequelize.FLOAT
@@ -21,4 +21,4 @@ const fuelDelivery = (sequelize, Sequelize = require("sequelize")) => {
   return FuelDelivery;
 };
 
-module.exports = fuelDelivery;
+export default fuelDelivery;

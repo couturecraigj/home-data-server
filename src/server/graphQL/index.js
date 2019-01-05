@@ -1,24 +1,33 @@
-const { ApolloServer } = require("apollo-server-express");
-const typeDefs = require("./typeDefs");
-const resolvers = require("./resolvers");
-const sequelize = require("../database");
-const services = require("../services");
+const { ApolloServer } = require('apollo-server-express');
 
-const applyApollo = (app) => {
+const resolvers = require('./resolvers').default;
+const sequelize = require('../database').default;
+const services = require('../services');
+const typeDefs = require('./typeDefs').default;
+
+const applyApollo = app => {
   const apolloServer = new ApolloServer({
     typeDefs,
     resolvers,
-    context: ({ req, res }) => ({
-      req,
-      res,
-      ip: req.headers["x-forwarded-for"] || req.connection.remoteAddress,
-      db: sequelize,
-      services
-    })
+    context: async ({ req, res }) => {
+      const timeStamp = Date.now();
+      const day = await sequelize.models.Day.ensureCreated(timeStamp);
+
+      return {
+        req,
+        res,
+        timeStamp,
+        dayId: day.id,
+        ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
+        db: sequelize,
+        services
+      };
+    }
   });
-  apolloServer.applyMiddleware({app});
+
+  apolloServer.applyMiddleware({ app });
+
   return app;
-}
+};
 
-module.exports = applyApollo
-
+export default applyApollo;

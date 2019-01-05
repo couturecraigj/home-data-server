@@ -1,14 +1,14 @@
-const Room = require("./Room");
-const RoomHistory = require("./RoomHistory");
-const Weather = require("./Weather");
-const WeatherForecast = require("./WeatherForecast");
-const Thermostat = require("./Thermostat");
-const ThermostatHistory = require("./ThermostatHistory");
-const Zone = require("./Zone");
-const Device = require("./Device");
-const Day = require("./Day");
-const Location = require("./Location");
-const FuelDelivery = require("./FuelDelivery");
+const Day = require('./Day').default;
+const Device = require('./Device').default;
+const FuelDelivery = require('./FuelDelivery').default;
+const Location = require('./Location').default;
+const Room = require('./Room').default;
+const RoomHistory = require('./RoomHistory').default;
+const Thermostat = require('./Thermostat').default;
+const ThermostatHistory = require('./ThermostatHistory').default;
+const Weather = require('./Weather').default;
+const WeatherForecast = require('./WeatherForecast').default;
+const Zone = require('./Zone').default;
 
 const models = {
   Day,
@@ -21,16 +21,21 @@ const models = {
   ThermostatHistory,
   Weather,
   WeatherForecast,
-  Zone,
+  Zone
 };
 
 const configure = (sequelize, Sequelize) => {
-  Object.entries(models).forEach(([key, model]) => {
+  for (const key in models) {
+    const model = models[key];
+
     models[key] = model(sequelize, Sequelize);
-  });
-  Object.values(models).forEach(model => {
+  }
+
+  for (const key in models) {
+    const model = models[key];
+
     if (model.associate) model.associate(sequelize.models);
-  });
+  }
 };
 
-module.exports = configure;
+export default configure;

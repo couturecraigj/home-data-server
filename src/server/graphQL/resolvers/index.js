@@ -1,59 +1,66 @@
 const resolverMap = {
   Query: {
-    hello: () => "world!"
+    hello: () => 'world!',
+    getWeather: (parent, args, context) =>
+      context.db.models.Weather.getAllWeather(args, context),
+    getWeatherForecast: (parent, args, context) =>
+      context.db.models.WeatherForecast.getWeatherForecast(args, context)
   },
   Mutation: {
-    addRoom: async (parent, args, context) => {
+    addLocation: (parent, args, context) =>
+      context.db.models.Location.addLocation(args.input, context),
+    addRoom: (parent, args, context) => {
       const timeStamp = Date.now();
-      try {
-        const day = await context.db.models.Day.ensureCreated(
-          timeStamp,
-          context
-        );
-        const weatherDetails = await context.getAllWeather(args.input);
 
-        let location = await context.db.models.Location.ensureCreated(
+      return Promise.all([
+        context.db.models.Day.ensureCreated(timeStamp, context),
+        context.getAllWeather(args.input)
+      ]).then(([day, weatherDetails]) => {
+        return context.db.models.Location.ensureCreated(
           {
             lat: args.input.lat,
             lon: args.input.lon,
             name: weatherDetails.name
           },
           context
-        );
-        context.db.models.Day.Location.ensureCreated(
-          {
-            LocationId: location.id,
-            DayId: day.id,
-            sunset: weatherDetails.sys.sunset,
-            sunrise: weatherDetails.sys.sunrise
-          },
-          context
-        );
+        ).then(location => {
+          context.db.models.Day.Location.ensureCreated(
+            {
+              LocationId: location.id,
+              DayId: day.id,
+              sunset: weatherDetails.sys.sunset,
+              sunrise: weatherDetails.sys.sunrise
+            },
+            context
+          );
 
-        const weather = await context.db.models.Weather.ensureCreated(
-          {
-            lat: args.input.lat,
-            lon: args.input.lon,
-            LocationId: location.id,
-            day
-          },
-          context
-        );
-        await context.db.models.WeatherForecast.ensureCreated(
-          { WeatherId: weather.id, ...args.input, days: 5, day },
-          context
-        );
+          return context.db.models.Weather.ensureCreated(
+            {
+              lat: args.input.lat,
+              lon: args.input.lon,
+              LocationId: location.id,
+              day
+            },
+            context
+          ).then(weather => {
+            context.db.models.WeatherForecast.ensureCreated(
+              { WeatherId: weather.id, ...args.input, days: 5, day },
+              context
+            );
 
-        const room = await context.db.models.Room.ensureCreated(
-          { ...args.input, location, timeStamp, day },
-          context
-        );
-        return room;
-      } catch (error) {
-        console.error(new Date(timeStamp), error);
-      }
+            return context.db.models.Room.ensureCreated(
+              { ...args.input, location, timeStamp, day },
+              context
+            );
+          });
+        });
+      });
     }
+  },
+  WeatherForecast: {
+    rain: parent => !parent.rain && 0,
+    snow: parent => !parent.snow && 0
   }
 };
 
-module.exports = resolverMap;
+export default resolverMap;

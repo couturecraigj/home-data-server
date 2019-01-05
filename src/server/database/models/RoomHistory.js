@@ -1,5 +1,5 @@
-const roomHistory = (sequelize, Sequelize = require("sequelize")) => {
-  const RoomHistory = sequelize.define("RoomHistory", {
+const roomHistory = (sequelize, Sequelize = require('sequelize')) => {
+  const RoomHistory = sequelize.define('RoomHistory', {
     timeStamp: {
       type: Sequelize.FLOAT
     },
@@ -26,4 +26,4 @@ const roomHistory = (sequelize, Sequelize = require("sequelize")) => {
   return RoomHistory;
 };
 
-module.exports = roomHistory;
+export default roomHistory;

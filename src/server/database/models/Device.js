@@ -1,5 +1,5 @@
-const device = (sequelize, Sequelize = require("sequelize")) => {
-  const Device = sequelize.define("Device", {
+const device = (sequelize, Sequelize = require('sequelize')) => {
+  const Device = sequelize.define('Device', {
     ipAddress: {
       type: Sequelize.STRING
     },
@@ -19,4 +19,4 @@ const device = (sequelize, Sequelize = require("sequelize")) => {
   return Device;
 };
 
-module.exports = device;
+export default device;

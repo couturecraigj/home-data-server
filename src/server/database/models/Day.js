@@ -1,5 +1,7 @@
-const day = (sequelize, Sequelize = require("sequelize")) => {
-  const Day = sequelize.define("Day", {
+import memoizee from 'memoizee';
+
+const day = (sequelize, Sequelize = require('sequelize')) => {
+  const Day = sequelize.define('Day', {
     dayOfMonth: {
       type: Sequelize.INTEGER
     },
@@ -11,7 +13,7 @@ const day = (sequelize, Sequelize = require("sequelize")) => {
     }
   });
 
-  Day.Location = sequelize.define("DayLocation", {
+  Day.Location = sequelize.define('DayLocation', {
     sunrise: {
       type: Sequelize.FLOAT
     },
@@ -33,16 +35,30 @@ const day = (sequelize, Sequelize = require("sequelize")) => {
     }).spread(dayLocation => dayLocation);
   };
 
-  Day.ensureCreated = timeStamp => {
-    const date = new Date(timeStamp);
-    return Day.findOrCreate({
-      where: {
-        month: date.getMonth() + 1,
-        year: date.getFullYear(),
-        dayOfMonth: date.getDate()
+  Day.ensureCreated = memoizee(
+    timeStamp => {
+      const date = new Date(timeStamp);
+
+      return Day.findOrCreate({
+        where: {
+          month: date.getMonth() + 1,
+          year: date.getFullYear(),
+          dayOfMonth: date.getDate()
+        }
+      }).spread(day => day);
+    },
+    {
+      normalizer: args => {
+        const date = new Date(args[0]);
+
+        return JSON.stringify({
+          month: date.getMonth() + 1,
+          year: date.getFullYear(),
+          dayOfMonth: date.getDate()
+        });
       }
-    }).spread(day => day);
-  };
+    }
+  );
 
   Day.associate = models => {
     Day.belongsToMany(models.Location, {
@@ -56,4 +72,4 @@ const day = (sequelize, Sequelize = require("sequelize")) => {
   return Day;
 };
 
-module.exports = day;
+export default day;

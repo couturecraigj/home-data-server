@@ -1,8 +1,9 @@
-const { ApolloServer } = require("apollo-server");
-const typeDefs = require("./typeDefs");
-const resolvers = require("./resolvers");
-const sequelize = require("../database");
-const services = require("../services");
+const { ApolloServer } = require('apollo-server');
+
+const resolvers = require('./resolvers');
+const sequelize = require('../database');
+const services = require('../services');
+const typeDefs = require('./typeDefs');
 
 const server = new ApolloServer({
   typeDefs,
@@ -10,7 +11,7 @@ const server = new ApolloServer({
   context: ({ req, res }) => ({
     req,
     res,
-    ip: req.headers["x-forwarded-for"] || req.connection.remoteAddress,
+    ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
     db: sequelize,
     services
   })

@@ -1,10 +1,11 @@
-const Sequelize = require("sequelize");
-const models = require("./models");
+const Sequelize = require('sequelize');
+
+const models = require('./models').default;
 
 const sequelize = new Sequelize({
-  dialect: "sqlite",
+  dialect: 'sqlite',
   logging: false,
-  storage: "./db.sqlite"
+  storage: './db.sqlite'
 });
 
 sequelize
@@ -14,7 +15,8 @@ sequelize
     await sequelize.sync({ force: true });
   })
   .catch(err => {
-    console.error("Unable to connect to the database:", err);
+    // eslint-disable-next-line no-console
+    console.error('Unable to connect to the database:', err);
   });
 
-module.exports = sequelize;
+export default sequelize;

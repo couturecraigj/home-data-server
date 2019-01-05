@@ -1,5 +1,5 @@
-const zone = (sequelize, Sequelize = require("sequelize")) => {
-  const Zone = sequelize.define("Zone", {
+const zone = (sequelize, Sequelize = require('sequelize')) => {
+  const Zone = sequelize.define('Zone', {
     name: {
       type: Sequelize.STRING
     }
@@ -14,4 +14,4 @@ const zone = (sequelize, Sequelize = require("sequelize")) => {
   return Zone;
 };
 
-module.exports = zone;
+export default zone;
