@@ -9,7 +9,7 @@ main.py
 coverage
 node_modules
 build
-db.sqlite
+/db.sqlite
 .env.local
 .env
 .env.development.local
