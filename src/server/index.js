@@ -1,11 +1,10 @@
 import cookieParser from 'cookie-parser';
 import renderApp from './render-app';
+import startSensing from '../sensors';
 
 const express = require('express');
 
 const applyApollo = require('./graphQL').default;
-
-const startSensing = require('../sensors');
 
 const app = express();
 
