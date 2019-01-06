@@ -1,13 +1,16 @@
 const { platform } = require('os');
 
 const startSensing = () => {
-  console.log(platform());
-
   if (!['darwin', 'win32'].includes(platform())) {
-    const find = require('./node_modules/local-devices');
+    const find = require('local-devices');
+    const oui = require('oui');
 
     find().then(devices =>
-      console.log(devices.filter(({ mac }) => mac !== '<incomplete>'))
+      console.log(
+        devices
+          .filter(({ mac }) => mac !== '<incomplete>')
+          .map(v => ({ ...v, vendor: oui(v.mac) }))
+      )
     );
     const temperature = require('./thermostat');
 
