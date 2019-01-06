@@ -1,6 +1,6 @@
 const { platform } = require('os');
 
-const connectSensors = () => {
+const startSensing = () => {
   console.log(platform());
 
   if (!['darwin', 'win32'].includes(platform())) {
@@ -13,4 +13,4 @@ const connectSensors = () => {
   }
 };
 
-module.exports = connectSensors();
+module.exports = startSensing;

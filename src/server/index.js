@@ -5,7 +5,7 @@ const express = require('express');
 
 const applyApollo = require('./graphQL').default;
 
-require('../sensors');
+const startSensing = require('../sensors');
 
 const app = express();
 
@@ -16,5 +16,7 @@ applyApollo(app);
 app.get('*', (req, res) => {
   renderApp(req, res);
 });
+
+startSensing();
 
 export default app;
