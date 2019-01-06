@@ -7,10 +7,6 @@ const applyApollo = require('./graphQL').default;
 
 require('../sensors');
 
-const { platform } = require('os');
-
-console.log(platform());
-
 const app = express();
 
 app.use(cookieParser('SECRET'));

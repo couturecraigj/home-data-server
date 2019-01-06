@@ -1,7 +1,7 @@
 /* eslint-disable import/no-unresolved, node/no-missing-require */
 try {
-  const fetch = require('node-fetch');
-  const tempSensor = require('node-dht-sensor');
+  const fetch = require('./node_modules/node-fetch');
+  const tempSensor = require('./node_modules/node-dht-sensor');
 
   const addRoom = variables =>
     fetch('http://127.0.0.1:8080/', {
