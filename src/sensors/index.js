@@ -6,7 +6,9 @@ const startSensing = () => {
   if (!['darwin', 'win32'].includes(platform())) {
     const find = require('./node_modules/local-devices');
 
-    find().then(devices => console.log(devices));
+    find().then(devices =>
+      console.log(devices.filter(({ mac }) => mac !== '<incomplete>'))
+    );
     const temperature = require('./thermostat');
 
     temperature.read();
