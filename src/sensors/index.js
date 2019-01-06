@@ -1,5 +1,8 @@
 const { platform } = require('os');
 
+
+console.log(platform());
+
 if (!['darwin', 'win32'].includes(platform())) {
   const find = require('local-devices');
 
