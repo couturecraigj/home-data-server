@@ -1,9 +1,11 @@
 import fs from 'fs';
+import path from 'path';
 import http from 'http';
 import https from 'https';
 
-const privateKey = fs.readFileSync('./key.pem');
-const privateCert = fs.readFileSync('./cert.pem');
+const cwd = process.cwd();
+const privateKey = fs.readFileSync(path.join(cwd, 'key.pem'));
+const privateCert = fs.readFileSync(path.join(cwd, 'cert.pem'));
 
 require('dotenv').config();
 let app = require('./server').default;
