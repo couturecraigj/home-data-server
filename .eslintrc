@@ -26,21 +26,22 @@
                 "usePrettierrc": true
             }
         ],
+        "node/no-missing-require": "off",
         "node/no-unsupported-features": "off",
         "node/no-unsupported-features/es-syntax": "off",
-        "node/no-missing-require": [
-            "error",
-            {
-                "allowModules": [],
-                "resolvePaths": [],
-                "tryExtensions": [
-                    ".js",
-                    ".jsx",
-                    ".json",
-                    ".node"
-                ]
-            }
-        ],
+        // "node/no-missing-require": [
+        //     "error",
+        //     {
+        //         "allowModules": [],
+        //         "resolvePaths": [],
+        //         "tryExtensions": [
+        //             ".js",
+        //             ".jsx",
+        //             ".json",
+        //             ".node"
+        //         ]
+        //     }
+        // ],
 
         "jsx-a11y/label-has-for": [
             2,

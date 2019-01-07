@@ -1,4 +1,9 @@
-import express from 'express';
+import fs from 'fs';
+import http from 'http';
+import https from 'https';
+
+const privateKey = fs.readFileSync('./key.pem');
+const privateCert = fs.readFileSync('./cert.pem');
 
 require('dotenv').config();
 let app = require('./server').default;
@@ -20,17 +25,22 @@ if (module.hot) {
 }
 
 const port = process.env.PORT || 3000;
+const securePort = process.env.SECURE_PORT;
 
-export default express()
-  .use((req, res) => app.handle(req, res))
-  .listen(port, function(err) {
-    if (err) {
-      // eslint-disable-next-line no-console
-      console.error(err);
+const createServers = () => {
+  if (securePort) {
+    const httpsServer = https.createServer(
+      {
+        key: privateKey,
+        cert: privateCert
+      },
+      (req, res) => app.handle(req, res)
+    );
 
-      return;
-    }
+    httpsServer.listen(securePort);
+  }
 
-    // eslint-disable-next-line no-console
-    console.log(`> Started on port ${port}`);
-  });
+  http.createServer((req, res) => app.handle(req, res)).listen(port);
+};
+
+export default createServers();
