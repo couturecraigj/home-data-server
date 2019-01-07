@@ -64,6 +64,7 @@ try {
 
   module.exports = sensor;
 } catch (error) {
+  console.error(error);
   module.exports = { read: () => {} };
 }
 
