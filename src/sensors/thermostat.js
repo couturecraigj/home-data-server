@@ -17,7 +17,9 @@ try {
       headers: {
         'Content-Type': 'application/json'
       }
-    }).catch(console.error);
+    })
+      // eslint-disable-next-line no-console
+      .catch(console.error);
 
   const sensor = {
     sensors: [
@@ -58,6 +60,7 @@ try {
 
   module.exports = sensor;
 } catch (error) {
+  // eslint-disable-next-line no-console
   console.error(error);
   module.exports = { read: () => {} };
 }

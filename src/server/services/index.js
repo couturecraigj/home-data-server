@@ -1,5 +1,5 @@
-const weather = require('./weather')
+const weather = require('./weather');
 
 module.exports = {
   weather
-}
+};
