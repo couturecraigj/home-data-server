@@ -1,4 +1,4 @@
-/* eslint-disable import/no-unresolved, node/no-missing-require */
+/* eslint-disable import/no-unresolved, node/no-missing-require, eslint-comments/no-unused-disable */
 try {
   const fetch = require('node-fetch');
   const tempSensor = require('node-dht-sensor');
@@ -65,4 +65,4 @@ try {
   module.exports = { read: () => {} };
 }
 
-/* eslint-enable import/no-unresolved, node/no-missing-require */
+/* eslint-enable import/no-unresolved, node/no-missing-require, eslint-comments/no-unused-disable */
