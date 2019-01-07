@@ -76,5 +76,9 @@
         "webpack": "webpack"
     },
     "author": "",
-    "license": "ISC"
+    "license": "ISC",
+    "optionalDependencies": {
+        "local-devices": "^1.1.1",
+        "node-dht-sensor": "^0.0.34"
+    }
 }
