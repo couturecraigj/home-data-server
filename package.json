@@ -70,8 +70,10 @@
     "scripts": {
         "start": "node src/server/graphQL/stand-alone.js",
         "start:ui": "razzle start",
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "webpack": "webpack"
+        "build": "razzle build",
+        "test": "razzle test --env=jsdom",
+        "webpack": "webpack",
+        "start:prod": "NODE_ENV=production node build/server.js"
     },
     "author": "",
     "license": "ISC",

@@ -1,5 +1,6 @@
 import express from 'express';
 
+require('dotenv').config();
 let app = require('./server').default;
 
 if (module.hot) {
