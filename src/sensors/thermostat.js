@@ -4,7 +4,7 @@ try {
   const tempSensor = require('node-dht-sensor');
 
   const addRoom = variables =>
-    fetch('http://127.0.0.1:8080/', {
+    fetch('http://127.0.0.1:8080/graphql', {
       method: 'POST',
       body: JSON.stringify({
         query: `mutation AddRoom($input: RoomInput!) {
@@ -28,7 +28,7 @@ try {
         reading: ''
       }
     ],
-    read() {
+    async read() {
       for (const sens of this.sensors) {
         const b = tempSensor.read(sens.type, sens.pin);
         const reading = `${sens.name}: ${b.temperature.toFixed(
@@ -38,10 +38,9 @@ try {
         if (reading === sens.reading) continue;
 
         sens.reading = reading;
-        console.log(reading);
 
         try {
-          addRoom({
+          await addRoom({
             input: {
               name: sens.name,
               lat: 42.9557296,

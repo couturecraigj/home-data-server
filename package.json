@@ -69,8 +69,6 @@
     },
     "scripts": {
         "start": "node src/server/graphQL/stand-alone.js",
-        "postinstall": "npm run install:sensors",
-        "install:sensors": "node scripts/install-sensors.js",
         "start:ui": "razzle start",
         "test": "echo \"Error: no test specified\" && exit 1",
         "webpack": "webpack"
