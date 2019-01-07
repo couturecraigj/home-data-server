@@ -17,7 +17,7 @@ try {
       headers: {
         'Content-Type': 'application/json'
       }
-    });
+    }).catch(console.error);
 
   const sensor = {
     sensors: [
@@ -28,7 +28,7 @@ try {
         reading: ''
       }
     ],
-    async read() {
+    read() {
       for (const sens of this.sensors) {
         const b = tempSensor.read(sens.type, sens.pin);
         const reading = `${sens.name}: ${b.temperature.toFixed(
@@ -39,20 +39,15 @@ try {
 
         sens.reading = reading;
 
-        try {
-          await addRoom({
-            input: {
-              name: sens.name,
-              lat: 42.9557296,
-              lon: -72.3180388,
-              humidity: b.humidity,
-              temperature: b.temperature
-            }
-          });
-        } catch (error) {
-          // eslint-disable-next-line no-console
-          console.error(error);
-        }
+        addRoom({
+          input: {
+            name: sens.name,
+            lat: 42.9557296,
+            lon: -72.3180388,
+            humidity: b.humidity,
+            temperature: b.temperature
+          }
+        });
       }
 
       setTimeout(function() {
