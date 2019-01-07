@@ -16,4 +16,4 @@ const startSensing = async () => {
   }
 };
 
-module.exports = startSensing;
+export default startSensing;
