@@ -38,6 +38,7 @@ try {
         if (reading === sens.reading) continue;
 
         sens.reading = reading;
+        console.log(reading);
 
         try {
           addRoom({
